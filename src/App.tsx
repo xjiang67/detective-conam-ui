@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import "./styles.css";
+import { useState } from "react";
+import FileUpload from "react-material-file-upload";
 
 function App() {
+  const [files, setFiles] = useState<File[]>([]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Upload your file so Conan will help detect</h1>
+      <h2>Only upload plain txt file please</h2>
+      <FileUpload value={files} onChange={setFiles} />
     </div>
   );
 }
 
 export default App;
+
+
