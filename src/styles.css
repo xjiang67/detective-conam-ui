@@ -2,3 +2,13 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.DetectSection {
+  margin-top: 30px;
+}
+
+.ResultSection {
+  margin-top: 30px;
+  padding-left: 200px;
+  padding-right: 200px;
+}
