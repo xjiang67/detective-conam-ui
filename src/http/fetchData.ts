@@ -2,8 +2,9 @@ import axios from 'axios';
 
 export type Response = {
   total: number;
-  model1: number;
-  model2: number;
+  GPT3ADA: number;
+  SupportVectorMachine: number;
+  NaiveBayes:number;
 };
 
 export type GetResponse = {
@@ -13,7 +14,6 @@ export type GetResponse = {
 export async function detectFile(content: string) {
   try {
     // 👇️ const data: GetResponse
-    console.log("content:" + content);
     const { data, status } = await axios.post<GetResponse>(
       'http://localhost:8888/api/v1/upload',
       content, //change it to upload files 

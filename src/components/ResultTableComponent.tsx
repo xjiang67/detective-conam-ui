@@ -30,9 +30,8 @@ async function getSerializedString(file: File) {
 
 const ResultTableComponent: React.FC<Props> = () => {
   const [files, setFiles] = useState<File[]>([]);
-  const [total, setTotal] = useState<string>("");
-  const [model1, setModel1] = useState<string>("");
-  const [model2, setModel2] = useState<string>("");
+  const [keys, setKeys] = useState<string[]>([]);
+  const [values, setValues] = useState<string[]>([]);
   const [value, setValue] = useState("");
   const [showTable, setShowTable] = useState<boolean>(false);
 
@@ -42,19 +41,22 @@ const ResultTableComponent: React.FC<Props> = () => {
   const sendRequest = useCallback(async () => {
     let detectString = value;
     if (files.length > 0) {
-        detectString = await getSerializedString(files[0]) as string;
+      detectString = (await getSerializedString(files[0])) as string;
     }
     const data = await detectFile(detectString);
+
     if (data !== null) {
       setShowTable(true);
-      let resultString = JSON.stringify(data, null, 4);
-      let result: Response = JSON.parse(resultString);
-      let totalNumber = result?.total;
-      let model1Number = result?.model1;
-      let model2Number = result?.model2;
-      setTotal((totalNumber * 100).toString() + "%");
-      setModel1((model1Number * 100).toString() + "%");
-      setModel2((model2Number * 100).toString() + "%");
+      let resultKeys: string[] = [];
+      let resultValues: string[] = [];
+      Object.entries(data).forEach((entry) => {
+        const [key, value] = entry;
+        console.log(`${key}: ${value}`);
+        resultKeys.push(key);
+        resultValues.push((value*100).toString() + "%");
+      });
+      setKeys(resultKeys);
+      setValues(resultValues);
     }
   }, [value, files]); // update the callback if the state changes
 
@@ -86,20 +88,22 @@ const ResultTableComponent: React.FC<Props> = () => {
                 <TableCell>Probability</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>Total</TableCell>
-                <TableCell>{total}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Model 1</TableCell>
-                <TableCell>{model1}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Model 2</TableCell>
-                <TableCell>{model2}</TableCell>
-              </TableRow>
-            </TableBody>
+            <TableRow>
+              <TableCell>{keys[0]}</TableCell>
+              <TableCell>{values[0]}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>{keys[1]}</TableCell>
+              <TableCell>{values[1]}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>{keys[2]}</TableCell>
+              <TableCell>{values[2]}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>{keys[3]}</TableCell>
+              <TableCell>{values[3]}</TableCell>
+            </TableRow>
           </Table>
         </TableContainer>
       </div>

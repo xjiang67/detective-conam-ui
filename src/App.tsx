@@ -1,9 +1,5 @@
 import "./App.css";
 import "./styles.css";
-import { useState } from "react";
-import FileUpload from "react-material-file-upload";
-import { Button } from "@mui/material";
-import { detectFile } from "./http/fetchData";
 import ResultTableComponent from "./components/ResultTableComponent";
 
 function App() {
