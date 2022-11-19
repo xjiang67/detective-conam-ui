@@ -7,24 +7,57 @@ import {
   TableCell,
   TableBody,
   Button,
+  TextField,
 } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import { detectFile, GetResponse, Response } from "../http/fetchData";
+import FileUpload from "react-material-file-upload";
+import { detectFile, Response } from "../http/fetchData";
 interface Props {}
 
+async function getSerializedString(file: File) {
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader();
+
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+
+    reader.onerror = reject;
+
+    reader.readAsBinaryString(file);
+  });
+//   let read = new FileReader();
+
+//   read.readAsBinaryString(file);
+
+//   read.onloadend = function () {
+//     console.log("file readed: " + read.result);
+//     return read.result?.toString() ? read.result?.toString() : "";
+//   };
+//   return "";
+}
+
 const ResultTableComponent: React.FC<Props> = () => {
+  const [files, setFiles] = useState<File[]>([]);
   const [total, setTotal] = useState<string>("");
   const [model1, setModel1] = useState<string>("");
   const [model2, setModel2] = useState<string>("");
-
+  const [value, setValue] = useState("");
   const [showTable, setShowTable] = useState<boolean>(false);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
   const sendRequest = useCallback(async () => {
-    const data = await detectFile();
+    let detectString = value;
+    if (files.length > 0) {
+        detectString = await getSerializedString(files[0]) as string;
+    }
+    const data = await detectFile(detectString);
     if (data !== null) {
       setShowTable(true);
       let resultString = JSON.stringify(data, null, 4);
       let result: Response = JSON.parse(resultString);
-      console.log(result);
       let totalNumber = result?.total;
       let model1Number = result?.model1;
       let model2Number = result?.model2;
@@ -32,10 +65,22 @@ const ResultTableComponent: React.FC<Props> = () => {
       setModel1((model1Number * 100).toString() + "%");
       setModel2((model2Number * 100).toString() + "%");
     }
-  }, []); // update the callback if the state changes
+  }, [value, files]); // update the callback if the state changes
 
   return (
     <div>
+      <FileUpload value={files} onChange={setFiles} />
+      <div className="ResultSection">
+        <TextField
+          id="outlined-multiline-flexible"
+          label="Multiline"
+          multiline
+          fullWidth
+          minRows={4}
+          value={value}
+          onChange={handleChange}
+        />
+      </div>
       <div className="DetectSection">
         <Button variant="contained" onClick={sendRequest}>
           Detect

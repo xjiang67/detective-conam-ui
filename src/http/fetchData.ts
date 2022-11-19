@@ -10,12 +10,13 @@ export type GetResponse = {
   data: Response[];
 };
 
-export async function detectFile() {
+export async function detectFile(content: string) {
   try {
     // 👇️ const data: GetResponse
+    console.log("content:" + content);
     const { data, status } = await axios.post<GetResponse>(
       'http://localhost:8888/api/v1/upload',
-      'ASDASDADS', //change it to upload files 
+      content, //change it to upload files 
       {
         headers: {
           'Content-Type': 'text/plain',
@@ -23,12 +24,9 @@ export async function detectFile() {
         },
       },
     );
-
+    console.log(JSON.stringify(data, null, 4));
     // 👇️ "response status is: 200"
     console.log('response status is: ', status);
-
-    // change to switch UI
-
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -41,4 +39,4 @@ export async function detectFile() {
   }
 }
 
-export default detectFile();
+export default detectFile;
