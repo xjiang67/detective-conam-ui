@@ -53,7 +53,7 @@ const ResultTableComponent: React.FC<Props> = () => {
         const [key, value] = entry;
         console.log(`${key}: ${value}`);
         resultKeys.push(key);
-        resultValues.push((value*100).toString() + "%");
+        resultValues.push((value * 100).toString() + "%");
       });
       setKeys(resultKeys);
       setValues(resultValues);
@@ -62,8 +62,10 @@ const ResultTableComponent: React.FC<Props> = () => {
 
   return (
     <div>
-      <FileUpload value={files} onChange={setFiles} />
-      <div className="ResultSection">
+      <div className="RegularSection">
+        <FileUpload value={files} onChange={setFiles} />
+      </div>
+      <div className="RegularSection">
         <TextField
           id="outlined-multiline-flexible"
           label="Multiline"
@@ -85,25 +87,27 @@ const ResultTableComponent: React.FC<Props> = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Title</TableCell>
-                <TableCell>Probability</TableCell>
+                <TableCell>Machine Generated Probability</TableCell>
               </TableRow>
             </TableHead>
-            <TableRow>
-              <TableCell>{keys[0]}</TableCell>
-              <TableCell>{values[0]}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>{keys[1]}</TableCell>
-              <TableCell>{values[1]}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>{keys[2]}</TableCell>
-              <TableCell>{values[2]}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>{keys[3]}</TableCell>
-              <TableCell>{values[3]}</TableCell>
-            </TableRow>
+            <TableBody>
+              <TableRow>
+                <TableCell>{keys[0]}</TableCell>
+                <TableCell>{values[0]}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>{keys[1]}</TableCell>
+                <TableCell>{values[1]}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>{keys[2]}</TableCell>
+                <TableCell>{values[2]}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>{keys[3]}</TableCell>
+                <TableCell>{values[3]}</TableCell>
+              </TableRow>
+            </TableBody>
           </Table>
         </TableContainer>
       </div>

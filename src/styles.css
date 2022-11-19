@@ -7,8 +7,15 @@
   margin-top: 30px;
 }
 
+.RegularSection {
+  margin-top: 30px;
+  padding-left: 200px;
+  padding-right: 200px;
+}
+
 .ResultSection {
   margin-top: 30px;
   padding-left: 200px;
   padding-right: 200px;
+  padding-bottom: 200px;
 }
