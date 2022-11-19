@@ -26,15 +26,6 @@ async function getSerializedString(file: File) {
 
     reader.readAsBinaryString(file);
   });
-//   let read = new FileReader();
-
-//   read.readAsBinaryString(file);
-
-//   read.onloadend = function () {
-//     console.log("file readed: " + read.result);
-//     return read.result?.toString() ? read.result?.toString() : "";
-//   };
-//   return "";
 }
 
 const ResultTableComponent: React.FC<Props> = () => {
