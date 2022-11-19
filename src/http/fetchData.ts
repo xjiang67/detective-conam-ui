@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-type Response = {
+export type Response = {
   total: number;
   model1: number;
   model2: number;
 };
 
-type GetResponse = {
+export type GetResponse = {
   data: Response[];
 };
 
@@ -23,8 +23,6 @@ export async function detectFile() {
         },
       },
     );
-
-    console.log(JSON.stringify(data, null, 4));
 
     // 👇️ "response status is: 200"
     console.log('response status is: ', status);
